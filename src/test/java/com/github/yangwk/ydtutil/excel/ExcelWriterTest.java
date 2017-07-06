@@ -76,7 +76,7 @@ public class ExcelWriterTest {
 		
 		ExcelWriter excelWriter = new ExcelWriter(0,0);
 		
-		FileOutputStream out = new FileOutputStream("F:/test/write-11.xlsx");
+		FileOutputStream out = new FileOutputStream("F:/temp/write-11.xlsx");
 		String[] columnFields = {"money","id","name","number","sex","birthDate","idCardNo","rank","isChinese","readHour","weight","bigMoney"};
 		String[] columnNames = {"金钱","主键","姓名","学号","性别","出生日期","身份证","等级","是否中国人","读书计时","体重","大钱财"};
 		String sheetName = "poi创建excel";
