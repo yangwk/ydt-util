@@ -12,7 +12,7 @@ public class ExcelReaderTest {
 
 	@Test
 	public void test() throws Exception{
-		String filePath = "F:/test/read.xlsx";
+		String filePath = "F:/temp/read.xlsx";
 		int startRowIndex = 2;
 		String[] columnFields = new String[]{"id","name","number","sex","birthDate","idCardNo"};
 		//idCardNo

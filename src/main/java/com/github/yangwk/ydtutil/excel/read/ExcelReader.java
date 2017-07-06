@@ -15,6 +15,7 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
 
+import com.github.yangwk.ydtutil.excel.ExcelException;
 import com.github.yangwk.ydtutil.excel.ExcelUtils;
 import com.github.yangwk.ydtutil.reflect.Reflector;
 
@@ -22,7 +23,10 @@ import com.github.yangwk.ydtutil.reflect.Reflector;
  * excel读取者
  */
 public class ExcelReader<T> {
-	public final String FIELD_ROWIDX = "rowIdx";	//写入行号的字段
+	/**
+	 * 写入行号的字段
+	 */
+	public final static String FIELD_ROWIDX = "rowIdx";
 	
 	
 	private Workbook workbook;
@@ -168,41 +172,48 @@ public class ExcelReader<T> {
 
 	private List<T> start(){
 		List<T> result = new ArrayList<T>();	//结果集合
-		
-		int rows = getRows();
-		for(int r=Math.min(startRowIndex, rows); r<rows; r++){	//行范围，与头起始行相关
-			Row row = sheet.getRow(r);
-			if(row == null){	//必须判断空
-				continue;
-			}
-			int cells = getCells(row);
-			if(cells <= 0){
-				continue;
-			}
-			T ttt = reflector.invokeConstructor();	//每行的实例化对象
-			setProperty(ttt, FIELD_ROWIDX, r, true);	//设置行
-			
-			boolean hasNotEmptyCell = false;	//存在非空列
-			
-			int start= Math.min( Math.min( Math.max(startColumnIndex, 0), cells ), columnFields.length);
-			int cellLen = Math.min(columnFields.length, cells);
-			
-			for(int c=start; c <cellLen ; c++ ){
-				Cell cell = row.getCell(c);
-				if(cell == null){	//必须判断空
+		Object currentValue = null;
+		int s = this.workbook.getSheetIndex(this.sheet);
+		int r = 0 , c = 0;
+		try{
+			int rows = getRows();
+			for(r=Math.min(startRowIndex, rows); r<rows; r++){	//行范围，与头起始行相关
+				Row row = sheet.getRow(r);
+				if(row == null){	//必须判断空
 					continue;
 				}
-				
-				ValueCell valueCell= ExcelUtils.getValueCell(cell, sheet, formulaEvaluator);	//取值
-				if(! isBlank(valueCell.value) ){	//不为空
-					hasNotEmptyCell = true;
+				int cells = getCells(row);
+				if(cells <= 0){
+					continue;
 				}
-				setProperty(ttt, columnFields[c - start], valueCell.value, false);
+				T ttt = reflector.invokeConstructor();	//每行的实例化对象
+				setProperty(ttt, FIELD_ROWIDX, r, true);	//设置行
+				
+				boolean hasNotEmptyCell = false;	//存在非空列
+				
+				int start= Math.min( Math.min( Math.max(startColumnIndex, 0), cells ), columnFields.length);
+				int cellLen = Math.min(columnFields.length, cells);
+				
+				for( c=start; c <cellLen ; c++ ){
+					Cell cell = row.getCell(c);
+					if(cell == null){	//必须判断空
+						continue;
+					}
+					
+					ValueCell valueCell= ExcelUtils.getValueCell(cell, sheet, formulaEvaluator);	//取值
+					currentValue = valueCell.value;
+					if(! isBlank(currentValue) ){	//不为空
+						hasNotEmptyCell = true;
+					}
+					setProperty(ttt, columnFields[c - start], currentValue, false);
+				}
+				
+				if(hasNotEmptyCell){	//列不全部为空，即该行非空行
+					result.add( ttt );	//保存结果
+				}
 			}
-			
-			if(hasNotEmptyCell){	//列不全部为空，即该行非空行
-				result.add( ttt );	//保存结果
-			}
+		}catch(Exception e){
+			throw new ExcelException("解析excel文件出错>>当前位置>>第"+ (s+1) +"个表>第"+ (r+1) +"行>第" + (c+1) +"列>>数据为>>"+ currentValue, e);
 		}
 		
 		return result;
