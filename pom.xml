@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.github.yangwk</groupId>
 	<artifactId>ydt-util</artifactId>
-	<version>1.1</version>
+	<version>1.2</version>
 	<description>工具类集合</description>
 
 	<properties>
@@ -29,6 +29,7 @@
 		<commons.io.version>2.5</commons.io.version>
 		<commons.beanutils.version>1.9.3</commons.beanutils.version>
 		<commons.codec.version>1.9</commons.codec.version>
+		<commons.collections.version>3.2.2</commons.collections.version>
 	</properties>
 
 	<dependencies>
@@ -109,7 +110,7 @@
 			<artifactId>commons-codec</artifactId>
 			<version>${commons.codec.version}</version>
 		</dependency>
-
+		
 		<dependency>
 			<groupId>org.bouncycastle</groupId>
 			<artifactId>bcprov-jdk15on</artifactId>
@@ -145,6 +146,12 @@
 			<version>${httpclient.version}</version>
 			<scope>provided</scope>
 			<optional>true</optional>
+		</dependency>
+		
+		<dependency>
+			<groupId>commons-collections</groupId>
+			<artifactId>commons-collections</artifactId>
+			<version>${commons.collections.version}</version>
 		</dependency>
 
 	</dependencies>
