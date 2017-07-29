@@ -100,9 +100,15 @@ public class WriterTemplate<T> {
 	 */
 	public void writeBody(List<T> datas,String[] columnFields,WriterConvert convert){
 		excelWriter.start(clazz, datas, columnFields, convert, getBodyStyle() );
-		
-		
-		excelWriter.mergeSameCell(3, 0, new int[]{4,5});
+	}
+	
+	/**
+	 * 
+	 * @author yangwk
+	 * @see ExcelWriter#mergeSameCell(int, int, int[])
+	 */
+	public void mergeSameCell(int rowIndex, int groupCellIndex, int[] mergeCellIndexs){
+		excelWriter.mergeSameCell(rowIndex, groupCellIndex, mergeCellIndexs);
 	}
 	
 	/**
