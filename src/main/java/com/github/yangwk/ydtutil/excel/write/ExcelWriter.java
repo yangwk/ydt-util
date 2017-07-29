@@ -47,7 +47,7 @@ public class ExcelWriter {
 	private final int startColumnIndex;
 	
 	/**
-	 * excel输出者 
+	 * excel输出。默认的输出会将行下标新增
 	 * @author yangwk
 	 * @param startRowIndex 要操作的起始行，从0开始
 	 * @param startColumnIndex 要操作的起始列，从0开始
@@ -182,7 +182,7 @@ public class ExcelWriter {
 				
 				setCellStyle(cell, poiCellStyle, cellStyle);
 			}
-			startRowIndex ++;
+			increaseStartRowIndex();
 		}
 	}
 	
@@ -193,7 +193,7 @@ public class ExcelWriter {
 	 * @param rowCells 一行定义的列数（将被合并）
 	 * @param cellStyle 样式，如果为null则不设置样式
 	 */
-	public void start(final String data, int rowCells, com.github.yangwk.ydtutil.excel.write.CellStyle cellStyle){
+	private void start0(final String data, int rowCells, com.github.yangwk.ydtutil.excel.write.CellStyle cellStyle){
 		startRowIndex = Math.min( Math.max(startRowIndex, 0), getRows());
 		int rowIndex = startRowIndex;
 		int defaultCells = rowCells;	//默认列数
@@ -219,10 +219,29 @@ public class ExcelWriter {
 				setCellStyle(cell, poiCellStyle, cellStyle);
 			}
 			
-			startRowIndex ++;
+			increaseStartRowIndex();
 		}
 		
 		mergeOneRow(rowIndex, rowCells);	//合并
+	}
+	
+	/**
+	 * 新增行下标
+	 * @author yangwk
+	 */
+	private void increaseStartRowIndex(){
+		startRowIndex ++ ;
+	}
+
+	/**
+	 * 输出数据
+	 * @author yangwk
+	 * @param data 输出数据作为一行
+	 * @param rowCells 一行定义的列数（将被合并）
+	 * @param cellStyle 样式，如果为null则不设置样式
+	 */
+	public void start(final String data, int rowCells, com.github.yangwk.ydtutil.excel.write.CellStyle cellStyle){
+		start0(data, rowCells, cellStyle);
 	}
 	
 	/**
@@ -255,7 +274,7 @@ public class ExcelWriter {
 				
 				setCellStyle(cell, poiCellStyle, cellStyle);
 			}
-			startRowIndex ++;
+			increaseStartRowIndex();
 		}
 	}
 
@@ -446,6 +465,18 @@ public class ExcelWriter {
 	private void addMergedRegion(int firstRow, int lastRow, int firstCol, int lastCol){
 		CellRangeAddress candidateRegion = new CellRangeAddress(firstRow, lastRow, firstCol, lastCol);
 		sheet.addMergedRegion(candidateRegion);
+	}
+	
+	/**
+	 * 合并单元格
+	 * @author yangwk
+	 * @param firstRow 起始行，从0开始
+	 * @param lastRow 结尾行
+	 * @param firstCol 起始列
+	 * @param lastCol 结尾列
+	 */
+	public void merge(int firstRow, int lastRow, int firstCol, int lastCol){
+		addMergedRegion(firstRow, lastRow, firstCol, lastCol);
 	}
 	
 	/**
