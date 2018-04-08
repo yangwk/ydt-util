@@ -1,7 +1,7 @@
 package com.github.yangwk.ydtutil.range;
 
 /**
- * 范围
+ * 范围[start,end]包括边界值
  * @see #Range(int, int)
  * @author yangwk
  */
