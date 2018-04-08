@@ -149,7 +149,7 @@ public class ChartExtract<T> {
 		if(legendNode.getName() == null){
 			return null;
 		}
-		StringBuffer fullName = new StringBuffer(); 
+		StringBuilder fullName = new StringBuilder(); 
 		fullName.append( legendNode.getName() );
 		if(legendNode.getSuffixName() != null){
 			fullName.append( legendNode.getSuffixName() );
@@ -164,7 +164,7 @@ public class ChartExtract<T> {
 		if(axisNode.getName() == null){
 			return null;
 		}
-		StringBuffer fullName = new StringBuffer(); 
+		StringBuilder fullName = new StringBuilder(); 
 		fullName.append( axisNode.getName() );
 		if(axisNode.getSuffixName() != null){
 			fullName.append( axisNode.getSuffixName() );

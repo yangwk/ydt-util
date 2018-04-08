@@ -24,7 +24,7 @@ public class ProcessUtils {
 	 * @return
 	 */
 	public static String executeProcess(boolean redirectErrorStream, Integer outLimit,String... command){
-		StringBuffer resultBuffer = new StringBuffer();
+		StringBuilder resultBuffer = new StringBuilder();
 		InputStream in = null;
 		InputStreamReader streamReader = null;
 		BufferedReader reader = null;
