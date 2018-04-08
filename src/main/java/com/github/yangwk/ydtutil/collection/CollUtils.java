@@ -54,7 +54,7 @@ public class CollUtils {
 	
 	
 	public static class SortHelper {
-		TreeMap<?, ?> sortMap(Object obj){
+		public TreeMap<?, ?> sortMap(Object obj){
 			TreeMap<?, Object> retval = null;
 			if(isMap(obj)){
 				Map<?, ?> m = (Map<?, ?>)obj;
@@ -71,7 +71,7 @@ public class CollUtils {
 			return retval;
 		}
 
-		Collection<?> sortColl(Object obj){
+		public Collection<?> sortColl(Object obj){
 			Collection<Object> retval = null;
 			if(isColl(obj)){
 				Collection<?> coll = (Collection<?>)obj;
@@ -87,7 +87,7 @@ public class CollUtils {
 		}
 		
 		
-		Object sortArray(Object obj, boolean copySrc){
+		public Object sortArray(Object obj, boolean copySrc){
 			Object[] retval = null;
 			if(isArray(obj)){
 				Object[] vs = (Object[])obj;
@@ -124,15 +124,15 @@ public class CollUtils {
 			return retval;
 		}
 
-		boolean isArray(Object obj) {
+		public boolean isArray(Object obj) {
 			return obj.getClass().isArray();
 		}
 		
-		boolean isColl(Object obj){
+		public boolean isColl(Object obj){
 			return ( obj instanceof Collection<?> );
 		}
 
-		boolean isMap(Object obj){
+		public boolean isMap(Object obj){
 			return ( obj instanceof Map<?, ?> );
 		}
 		
