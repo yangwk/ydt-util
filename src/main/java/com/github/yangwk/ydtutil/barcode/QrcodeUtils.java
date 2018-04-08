@@ -38,6 +38,7 @@ import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
  * @author yangwk
  */
 public class QrcodeUtils {
+	private QrcodeUtils() {}
 	
 	private static final String CHARSET = "UTF-8";
 	
@@ -84,8 +85,8 @@ public class QrcodeUtils {
 	 * @param innerImagePath 内嵌图片路径，如果为null则不内嵌
 	 * @see #encode(String, int, InputStream, OutputStream)
 	 */
-	public static void encode(String contents, int width, String innerImagePath, String absolutePath){
-		File file = new File(absolutePath);
+	public static void encode(String contents, int width, String innerImagePath, String targetPath){
+		File file = new File(targetPath);
 		Boolean error = Boolean.FALSE;
 		try {
 			encode(contents, width,
@@ -151,7 +152,7 @@ public class QrcodeUtils {
 			
 			int percent = 20;	//不能超过百分比范围
 			if( innerImage.getWidth() > image.getWidth()*percent/100 ||
-					innerImage.getHeight()*0.2 > image.getHeight()*percent/100 ){ 
+					innerImage.getHeight() > image.getHeight()*percent/100 ){ 
 				throw new RuntimeException("innerImage is over "+percent+"%, image: "+image.getWidth()+
 						"X"+image.getHeight()+" , innerImage: "+innerImage.getWidth()+"X"+innerImage.getHeight());
 			}
