@@ -1,38 +1,109 @@
 package com.github.yangwk.ydtutil.test.http;
 
-import org.junit.Test;
+import java.io.IOException;
+import java.util.concurrent.CountDownLatch;
 
-import com.alibaba.fastjson.JSONObject;
+import org.apache.http.impl.client.DefaultHttpRequestRetryHandler;
+import org.apache.http.protocol.BasicHttpContext;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.github.yangwk.ydtutil.http.HttpUtils;
 
+
 public class HttpUtilsTest {
+	static Logger LOG = LoggerFactory.getLogger(HttpUtilsTest.class);
 
-	@Test
-	public void test_postJson(){
-		String url = "http://localhost:5151";
-		url = "http://120.24.74.199:9001/eher/api/DoOrganization/login";
-		Godness godness = new Godness("beauty", 23, 23, 23f);
+	static void test(final String url, final long interval) {
+		Thread[] threads = new Thread[1];
 		
-		String body = JSONObject.toJSONString(godness);
-		body = "{\"version\":\"0.0.1\",\"sessionId\":\"\",\"sys_type\":\"mobile\",\"account\":\"\",\"device\":\"1111111\",\"data\":{\"username\":\"13999999999\",\"password\":\"123456\",\"deviceType\":\"mobile\"}}";
-		String result = HttpUtils.postJson(url, body);
+		final CountDownLatch latch = new CountDownLatch(threads.length);
 		
-		System.out.println(result);
+		long startTime = System.currentTimeMillis();
+		for(int r=0; r < threads.length; r ++) {
+			Thread thr = threads[r];
+			thr = new Thread(new Runnable() {
+				@Override
+				public void run() {
+					try {
+						HttpUtils.get(url, null);
+
+						if(interval > 0) {
+							try {
+								Thread.sleep(interval);
+							} catch (InterruptedException e) {
+								e.printStackTrace();
+							}
+						}
+					}finally {
+						latch.countDown();
+					}
+				}
+			});
+			thr.start();
+		}
+		
+		try {
+			latch.await();
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		long endTime = System.currentTimeMillis();
+		
+		System.out.println("cost time :" + (endTime - startTime));
+	}
+	
+	
+	static void testDefaultHttpRequestRetryHandler() {
+		DefaultHttpRequestRetryHandler h = DefaultHttpRequestRetryHandler.INSTANCE;
+		IOException exception = new org.apache.http.NoHttpResponseException("test");
+		boolean retry = h.retryRequest(exception, 1, new BasicHttpContext());
+		
+		System.out.println(retry);
+	}
+	
+	
+	static void testPressure() {
+		final int threads = 10;
+		final int interval = 3;
+		final String url = "http://localhost/json";
+		
+		LOG.info("threads {}", threads);
+		LOG.info("interval {}", interval);
+		LOG.info("url {}", url);
+		
+		Thread[] threadArr = new Thread[threads];
+		for(int r=0; r<threadArr.length; r++) {
+			Thread th = threadArr[r];
+			th = new Thread(new Runnable() {
+				
+				@Override
+				public void run() {
+					while(true) {
+						try {
+							HttpUtils.postJson(url, "", null);
+							
+							Thread.sleep(interval);
+						}catch(Exception e) {
+							LOG.error(e.getMessage(), e);
+						}
+					}
+				}
+			}, "test-post"+r);
+			th.start();
+		}
+		
+		try {
+			System.in.read();
+		} catch (IOException e) {
+		}
 	}
 
-	@Test
-	public void test_get(){
-		String url = "https://www.baidu.com/s?ie=UTF-8&wd=%E7%88%B1%E6%83%85";
+	public static void main(String[] args) {
+//		test("http://localhost/http-fs/", 0);
 		
-		String result = HttpUtils.get(url,null);
+//		testDefaultHttpRequestRetryHandler();
 		
-		System.out.println(result);
-	}
-
-	@Test
-	public void test_getFile(){
-		String url = "http://oimagec7.ydstatic.com/image?id=-7868013978043558082&product=adpublish";
-		String absolutePath = "f:/test/youdao-ad2.jpg";
-		HttpUtils.getFile(url, null, absolutePath);
+		testPressure();
 	}
 }

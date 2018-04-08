@@ -19,7 +19,7 @@
 		<poi.version>3.8</poi.version>
 		<zxing.javase.version>2.3.0</zxing.javase.version>
 		<bouncycastle.bcprov.version>1.56</bouncycastle.bcprov.version>
-		<httpclient.version>4.3.6</httpclient.version>
+		<httpclient.version>4.5.2</httpclient.version>
 		<logback.classic.version>1.1.8</logback.classic.version>
 		<commons.dbutils.version>1.6</commons.dbutils.version>
 		<druid.version>1.0.27</druid.version>

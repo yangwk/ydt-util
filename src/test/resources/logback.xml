@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+	<!-- 部署时只需修改property的值 -->
+	<property name="log_home" value="D:/yangwk/tmp/log" />
+	<property name="app_name" value="ydt-util" />
+	<property name="charset" value="UTF-8" />
+	<property name="pattern" value="%d{ISO8601} [%thread] %-5level %logger{36} - %msg%n" />
+
+	<appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder>
+			<pattern>${pattern}</pattern>
+			<charset>${charset}</charset>
+		</encoder>
+	</appender>
+
+	<appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${log_home}/${app_name}.log</file>
+		<rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+			<!-- rollover daily -->
+			<fileNamePattern>${log_home}/logbak/${app_name}.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+			<!-- each file should be at most ?MB, keep ? days worth of history, but at most ?GB -->
+			<maxFileSize>200MB</maxFileSize>    
+       		<maxHistory>2</maxHistory>
+       		<totalSizeCap>1GB</totalSizeCap>
+		</rollingPolicy>
+		<encoder>
+			<pattern>${pattern}</pattern>
+			<charset>${charset}</charset>
+		</encoder>
+	</appender>
+	
+	<!-- error日志再独立 -->
+	<appender name="ERROR_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<filter class="ch.qos.logback.classic.filter.LevelFilter">
+			<level>ERROR</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+		</filter>
+		
+		<file>${log_home}/${app_name}-error.log</file>
+		<rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+			<!-- rollover daily -->
+			<fileNamePattern>${log_home}/logbak/${app_name}-error.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+			<!-- each file should be at most ?MB, keep ? days worth of history, but at most ?GB -->
+			<maxFileSize>200MB</maxFileSize>    
+       		<maxHistory>2</maxHistory>
+       		<totalSizeCap>1GB</totalSizeCap>
+		</rollingPolicy>
+		<encoder>
+			<pattern>${pattern}</pattern>
+			<charset>${charset}</charset>
+		</encoder>
+	</appender>
+	
+	<root level="DEBUG">
+		<!-- <appender-ref ref="CONSOLE" /> -->
+		<appender-ref ref="FILE" />
+		<appender-ref ref="ERROR_FILE" />
+	</root>
+
+</configuration>
