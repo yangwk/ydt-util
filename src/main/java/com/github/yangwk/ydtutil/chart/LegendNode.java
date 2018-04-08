@@ -24,7 +24,7 @@ public class LegendNode {
 	 * @param idField	主值的字段
 	 * @param name	显示名称
 	 * @param nameField	显示名称的字段
-	 * @param suffixName	显示名称后缀（可作为一些辅助说明, 比如单位'(万亩)'）
+	 * @param suffixName	显示名称后缀（可作为一些辅助说明, 比如单位'万亩'）
 	 * @param suffixNameField	显示名称后缀的字段
 	 * @param valueField	取值的字段
 	 * @param defaultValue	取值的默认值

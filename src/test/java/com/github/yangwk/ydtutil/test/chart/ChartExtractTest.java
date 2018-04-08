@@ -3,6 +3,7 @@ package com.github.yangwk.ydtutil.test.chart;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.junit.Before;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,7 +19,8 @@ public class ChartExtractTest {
 	Logger log = LoggerFactory.getLogger(getClass());
 	List<AnalysisDTO> dataList;
 	
-	void beforeClass(){
+	@Before
+	public void beforeClass(){
 		dataList = new ArrayList<AnalysisDTO>();
 		AnalysisDTO dto1 = new AnalysisDTO(2016, 1, "1", "地区1", "001", "GDP", "元", "45");
 		AnalysisDTO dto2 = new AnalysisDTO(2016, 2, "1", "地区1", "001", "GDP", "元", "48.2");
@@ -45,11 +47,10 @@ public class ChartExtractTest {
 	
 	@Test
 	public void test(){
-		beforeClass();
 		
 		List<LegendNode> legendNodes = new ArrayList<LegendNode>();
 		legendNodes.add(new LegendNode("1","divCode", null, "divName",null,"year", "indexValue", 0));
-		legendNodes.add(new LegendNode("2","divCode", null, "divName",null,"year", "indexValue", 0));
+		legendNodes.add(new LegendNode("2","divCode", null, "divName","后缀",null, "indexValue", 0));
 		legendNodes.add(new LegendNode("3","divCode", "未知地区", null,null,"year", "indexValue", 0));
 		
 		List<AxisNode> axisNodes = new ArrayList<AxisNode>();

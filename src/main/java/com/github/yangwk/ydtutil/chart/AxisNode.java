@@ -22,7 +22,7 @@ public class AxisNode {
 	 * @param idField	主值的字段
 	 * @param name	显示名称
 	 * @param nameField	显示名称的字段
-	 * @param suffixName	显示名称后缀（可作为一些辅助说明, 比如单位'(万亩)'）
+	 * @param suffixName	显示名称后缀（可作为一些辅助说明, 比如单位'万亩'）
 	 * @param suffixNameField	显示名称后缀的字段
 	 */
 	public AxisNode(Object id, String idField, String name, String nameField, Object suffixName,
