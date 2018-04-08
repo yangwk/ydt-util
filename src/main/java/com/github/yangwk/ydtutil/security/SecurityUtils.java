@@ -19,15 +19,15 @@ public class SecurityUtils {
 	/**
 	 * DES 算法
 	 */
-	public static final String ALGORITHM_DES = "DES";
+	public static final String ALGORITHM_DES = "DES/ECB/PKCS5Padding";
 	/**
 	 * AES 算法
 	 */
-	public static final String ALGORITHM_AES = "AES";
+	public static final String ALGORITHM_AES = "AES/ECB/PKCS5Padding";
 	/**
 	 * DESede(3DES) 算法
 	 */
-	public static final String ALGORITHM_DESEDE = "DESede";
+	public static final String ALGORITHM_DESEDE = "DESede/ECB/PKCS5Padding";
 
 	private static SecretKey getSecretKey(byte[] key,String algorithm){
 		SecretKey securekey = new SecretKeySpec(key,algorithm);

@@ -15,6 +15,7 @@ import org.apache.commons.io.IOUtils;
  *
  */
 public class KeyPairUtils {
+	private KeyPairUtils() {}
 
 	private static final String BEGIN_PUBLIC_KEY = "-----BEGIN PUBLIC KEY-----";
 	private static final String END_PUBLIC_KEY = "-----END PUBLIC KEY-----";
