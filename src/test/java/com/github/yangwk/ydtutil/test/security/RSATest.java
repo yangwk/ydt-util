@@ -24,7 +24,7 @@ public class RSATest {
 		byte[] result = rsa.encrypt(rsa.getPublicKey(), content.getBytes("UTF-8"));
 		
 		System.out.println(Hex.encodeHexString(result));
-		//2737949665f836508ef9197bd5f7665bf690d86e8d822a968cdef76571b998abcd9363a56f4a5919956b945833956c4d4d258417c0465e1e662345c8a20c6d1aae0480c01d823fa38ed1f0606b9735d38169b6b534a3eef712f7b1672f4a33cdce661ee3a857a9c3200b6b3d0c85185ba39f3d12651b1f4032d4cdaee374429f
+		//8bcdbb19f1ae93f4c638205ff677d00cf10b9ae96561a1e454c9c10a8c36771c6282335253cc14c01d3dab603c5b223f2c071ce67e2eab582af4c9e21b147480ab077c171ae527a253ccdb7a20bee0a86f778e8e5b54c3a063469d2227569d0cffa595b080b942a37218fb4c94b1a7654dd82d28c0e850597b4b5f8e947d2203
 
 	}
 	
@@ -49,7 +49,7 @@ public class RSATest {
 		
 		rsa.loadPKCS8PrivateKey(privateKey);
 		
-		String src = "2737949665f836508ef9197bd5f7665bf690d86e8d822a968cdef76571b998abcd9363a56f4a5919956b945833956c4d4d258417c0465e1e662345c8a20c6d1aae0480c01d823fa38ed1f0606b9735d38169b6b534a3eef712f7b1672f4a33cdce661ee3a857a9c3200b6b3d0c85185ba39f3d12651b1f4032d4cdaee374429f";
+		String src = "8bcdbb19f1ae93f4c638205ff677d00cf10b9ae96561a1e454c9c10a8c36771c6282335253cc14c01d3dab603c5b223f2c071ce67e2eab582af4c9e21b147480ab077c171ae527a253ccdb7a20bee0a86f778e8e5b54c3a063469d2227569d0cffa595b080b942a37218fb4c94b1a7654dd82d28c0e850597b4b5f8e947d2203";
 		byte[] data = Hex.decodeHex(src.toCharArray());
 		
 		byte[] result = rsa.decrypt(rsa.getPrivateKey(), data);
@@ -61,7 +61,7 @@ public class RSATest {
 	public void testEncryptFromFile() throws Exception{
 		RSA rsa = new RSA();
 		
-		String filePath = "f:/test/rsa/gen/xxx-pub.key";
+		String filePath = "d:/yangwk/tmp/rsa/gen/xxx-pub.key";
 		FileInputStream input = new FileInputStream(filePath);
 		rsa.loadPublicKey(input);
 		
@@ -70,7 +70,7 @@ public class RSATest {
 		byte[] result = rsa.encrypt(rsa.getPublicKey(), content.getBytes("UTF-8"));
 		
 		System.out.println(Hex.encodeHexString(result));
-		//a64e2d9157b8753de959a9850667fbd8ee4e1ea48e0ca17c31a6c816b60b9b8d5f759d3cabc9f71484395a266da4f723807cca9827c48110024bc4f9a7dfdd2c07361ea377e9f9ebbb5f6b7c8830aa903151809be6157f0767ad57706ffaca40de432c5ef79edaa85617309cb4abe4a5ea797b12664fd8949f9676f2346e4136
+		//2906ab1d42fba3c96456d0d6c3f26cb4035fc1c6da44f6721da40f42666ad375c9dc6e4b1e3978393855b44bb07324f4b5940ff30d3fad3651196f8a063587bd80c162b466af619fa47cf61559981340ccf05da8b815780946eab8e2372b502465110651fe0e0aec380355feb6213d8b68127474a1e9e3eae2b257ed27514282
 
 
 	}
@@ -79,11 +79,11 @@ public class RSATest {
 	public void testDecryptFromFile() throws Exception {
 		RSA rsa = new RSA();
 		
-		String filePath = "f:/test/rsa/gen/xxx-pri.key";
+		String filePath = "d:/yangwk/tmp/rsa/gen/xxx-pri.key";
 		FileInputStream input = new FileInputStream(filePath);
 		rsa.loadPKCS8PrivateKey(input);
 		
-		String src = "a64e2d9157b8753de959a9850667fbd8ee4e1ea48e0ca17c31a6c816b60b9b8d5f759d3cabc9f71484395a266da4f723807cca9827c48110024bc4f9a7dfdd2c07361ea377e9f9ebbb5f6b7c8830aa903151809be6157f0767ad57706ffaca40de432c5ef79edaa85617309cb4abe4a5ea797b12664fd8949f9676f2346e4136";
+		String src = "2906ab1d42fba3c96456d0d6c3f26cb4035fc1c6da44f6721da40f42666ad375c9dc6e4b1e3978393855b44bb07324f4b5940ff30d3fad3651196f8a063587bd80c162b466af619fa47cf61559981340ccf05da8b815780946eab8e2372b502465110651fe0e0aec380355feb6213d8b68127474a1e9e3eae2b257ed27514282";
 		byte[] data = Hex.decodeHex(src.toCharArray());
 		
 		byte[] result = rsa.decrypt(rsa.getPrivateKey(), data);
@@ -94,7 +94,7 @@ public class RSATest {
 	@Test
 	public void testGenKeyPair() throws Exception{
 		RSA rsa = new RSA();
-		rsa.genKeyPair("f:/test/rsa/gen/xxx-pri.key", "f:/test/rsa/gen/xxx-pub.key");
+		rsa.genKeyPair("d:/yangwk/tmp/rsa/gen/xxx-pri.key", "d:/yangwk/tmp/rsa/gen/xxx-pub.key");
 	}
 	
 	

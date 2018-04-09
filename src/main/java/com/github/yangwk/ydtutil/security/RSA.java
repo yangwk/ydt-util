@@ -28,7 +28,8 @@ import org.bouncycastle.jce.provider.BouncyCastleProvider;
  */
 public class RSA {
 	
-	private final String RSA = "RSA";
+	private final String ALGORITHM = "RSA";
+	private final String TRANSFORMATION = "RSA/None/PKCS1Padding";
 	private final int KEYSIZE = 1024;
 
 	private RSAPrivateKey privateKey;	//私钥
@@ -57,16 +58,16 @@ public class RSA {
 	 * @author yangwk
 	 * @param privateKeyPath
 	 *            私钥存放路径，绝对路径
-	 * @param publicKayPath
+	 * @param publicKeyPath
 	 *            公钥存放路径，绝对路径
 	 */
-	public void genKeyPair(String privateKeyPath, String publicKayPath){
+	public void genKeyPair(String privateKeyPath, String publicKeyPath){
 		try {
-			KeyPairGenerator keyPairGen = KeyPairGenerator.getInstance(RSA, new BouncyCastleProvider());
+			KeyPairGenerator keyPairGen = KeyPairGenerator.getInstance(ALGORITHM, new BouncyCastleProvider());
 			keyPairGen.initialize(KEYSIZE, new SecureRandom());
 			KeyPair keyPair= keyPairGen.generateKeyPair();
 			
-			KeyPairUtils.saveToFile(keyPair, privateKeyPath, publicKayPath);
+			KeyPairUtils.saveToFile(keyPair, privateKeyPath, publicKeyPath);
 			
 			this.privateKey= (RSAPrivateKey) keyPair.getPrivate();
 			this.publicKey= (RSAPublicKey) keyPair.getPublic();
@@ -116,7 +117,7 @@ public class RSA {
 		try {
 			byte[] keys = Base64.decodeBase64(base64PublicKey);	//解码base64
 			
-			KeyFactory keyFactory= KeyFactory.getInstance(RSA, new BouncyCastleProvider());
+			KeyFactory keyFactory= KeyFactory.getInstance(ALGORITHM, new BouncyCastleProvider());
 			X509EncodedKeySpec keySpec= new X509EncodedKeySpec( keys );
 			
 			this.publicKey= (RSAPublicKey) keyFactory.generatePublic(keySpec);
@@ -136,7 +137,7 @@ public class RSA {
 		try {
 			byte[] keys = Base64.decodeBase64(base64privateKey);	//解码base64
 			
-			KeyFactory keyFactory= KeyFactory.getInstance(RSA, new BouncyCastleProvider());
+			KeyFactory keyFactory= KeyFactory.getInstance(ALGORITHM, new BouncyCastleProvider());
 			PKCS8EncodedKeySpec keySpec= new PKCS8EncodedKeySpec(keys);
 			
 			this.privateKey= (RSAPrivateKey) keyFactory.generatePrivate(keySpec);
@@ -152,7 +153,7 @@ public class RSA {
 			
 			org.bouncycastle.asn1.pkcs.RSAPrivateKey asn1PrivateKey = org.bouncycastle.asn1.pkcs.RSAPrivateKey.getInstance( ASN1Sequence.getInstance(keys) );
 			
-			KeyFactory keyFactory= KeyFactory.getInstance(RSA, new BouncyCastleProvider());
+			KeyFactory keyFactory= KeyFactory.getInstance(ALGORITHM, new BouncyCastleProvider());
 			RSAPrivateKeySpec rsaPrivKeySpec = new RSAPrivateKeySpec(asn1PrivateKey.getModulus(), asn1PrivateKey.getPrivateExponent());
 			
 			this.privateKey= (RSAPrivateKey) keyFactory.generatePrivate(rsaPrivKeySpec);
@@ -174,7 +175,7 @@ public class RSA {
 	 */
 	public byte[] encrypt(RSAPublicKey publicKey, byte[] data){
 		try {
-			Cipher cipher= Cipher.getInstance(RSA, new BouncyCastleProvider());
+			Cipher cipher= Cipher.getInstance(TRANSFORMATION, new BouncyCastleProvider());
 			
 			cipher.init(Cipher.ENCRYPT_MODE, publicKey, new SecureRandom());
 			
@@ -193,7 +194,7 @@ public class RSA {
 	 */
 	public byte[] decrypt(RSAPrivateKey privateKey, byte[] data) {
 		try {
-			Cipher cipher= Cipher.getInstance(RSA, new BouncyCastleProvider());
+			Cipher cipher= Cipher.getInstance(TRANSFORMATION, new BouncyCastleProvider());
 			
 			cipher.init(Cipher.DECRYPT_MODE, privateKey, new SecureRandom());
 			
