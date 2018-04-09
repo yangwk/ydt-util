@@ -1,4 +1,4 @@
-package com.github.yangwk.ydtutil.range;
+package com.github.yangwk.ydtutil.collection;
 
 /**
  * 范围[start,end]包括边界值

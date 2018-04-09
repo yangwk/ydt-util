@@ -19,10 +19,10 @@ import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.ss.util.WorkbookUtil;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
+import com.github.yangwk.ydtutil.Eq;
+import com.github.yangwk.ydtutil.collection.CollUtils;
+import com.github.yangwk.ydtutil.collection.Range;
 import com.github.yangwk.ydtutil.excel.ExcelUtils;
-import com.github.yangwk.ydtutil.range.Range;
-import com.github.yangwk.ydtutil.range.RangeEqual;
-import com.github.yangwk.ydtutil.range.RangeUtils;
 import com.github.yangwk.ydtutil.reflect.Reflector;
 
 /**
@@ -427,10 +427,10 @@ public class ExcelWriter {
 			datas.add(new Object[]{groupValue, mergeValues});	//添加
 		}
 		//开始获取相邻等值范围
-		List<Range> ranges = RangeUtils.extract(datas, new RangeEqual<Object[]>() {
+		List<Range> ranges = CollUtils.range(datas, new Eq<Object[], Object[]>() {
 			
 			@Override
-			public boolean isEqual(Object[] prev, Object[] curr) {
+			public boolean equals(Object[] prev, Object[] curr) {
 				Object prevGroup = prev[0] ; 
 				Object[] prevMerges = (Object[])prev[1]; 
 				Object currGroup = curr[0];

@@ -1,4 +1,4 @@
-package com.github.yangwk.ydtutil.test.range;
+package com.github.yangwk.ydtutil.test.collection;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -6,9 +6,9 @@ import java.util.List;
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import org.junit.Test;
 
-import com.github.yangwk.ydtutil.range.Range;
-import com.github.yangwk.ydtutil.range.RangeEqual;
-import com.github.yangwk.ydtutil.range.RangeUtils;
+import com.github.yangwk.ydtutil.Eq;
+import com.github.yangwk.ydtutil.collection.CollUtils;
+import com.github.yangwk.ydtutil.collection.Range;
 
 /**
  * 
@@ -88,13 +88,13 @@ public class RangeTest {
 	@Test
 	public void test() {
 		List<String> datas = new ArrayList<String>();
-		for(String s : datas_5){
+		for(String s : datas_11){
 			datas.add(s);
 		}
 		
-		List<Range> ranges = RangeUtils.extract(datas, new RangeEqual<String>() {
+		List<Range> ranges = CollUtils.range(datas, new Eq<String, String>() {
 			@Override
-			public boolean isEqual(String one, String another) {
+			public boolean equals(String one, String another) {
 				return one == null ? one == another : one.equals(another);
 			}
 		});
