@@ -12,8 +12,8 @@ import java.util.Map.Entry;
 
 import org.junit.Test;
 
+import com.github.yangwk.ydtutil.Eq;
 import com.github.yangwk.ydtutil.collection.CollUtils;
-import com.github.yangwk.ydtutil.collection.Eq;
 import com.github.yangwk.ydtutil.collection.SortHelper;
 
 public class CollUtilsTest {

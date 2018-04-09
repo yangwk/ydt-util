@@ -6,6 +6,8 @@ import java.util.Iterator;
 
 import org.apache.commons.collections.CollectionUtils;
 
+import com.github.yangwk.ydtutil.Eq;
+
 public class CollUtils {
 	
 	/**
