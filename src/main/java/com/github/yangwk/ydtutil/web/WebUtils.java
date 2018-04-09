@@ -1,6 +1,12 @@
 package com.github.yangwk.ydtutil.web;
 
+import java.io.IOException;
+import java.io.PrintWriter;
+
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.apache.commons.io.IOUtils;
 
 /**
  * web工具类
@@ -59,5 +65,24 @@ public class WebUtils {
 	}
 	
 	
+	/**
+	 * 输出内容到HttpServletResponse
+	 * @author yangwk
+	 * @param content 输出的内容
+	 */
+	public static void writeToResponse(HttpServletResponse response, String content) {
+		PrintWriter writer = null;
+		try {
+			response.setCharacterEncoding( "UTF-8" );
+			
+			writer = response.getWriter();
+			writer.write( content );
+			writer.flush();
+		} catch (IOException e) {
+			throw new RuntimeException(e.getMessage(), e);
+		}finally {
+			IOUtils.closeQuietly(writer);
+		}
+	}
 	
 }
