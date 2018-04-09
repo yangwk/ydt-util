@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-import java.util.concurrent.RejectedExecutionException;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,12 +20,13 @@ public class TestThreadPool {
         
         BlockThreadPoolHolder.init(maximumPoolSize, -1);
         
-		final int executeCount = 100;
-		final int oneSleepTime = 100;
+		final int executeCount = 5;
+		final int threads = 5;
+		final int oneSleepTime = 1000;
 		final boolean canInterrupt = false;
 		final boolean useRandomSleepTime = true;
 		
-		List<Long> randomSleepTimes = new ArrayList<Long>();
+		final List<Long> randomSleepTimes = new ArrayList<Long>();
 		Random random = new Random();
 		for(int r=0; r<executeCount; r++) {
 			long time = oneSleepTime;
@@ -36,15 +36,24 @@ public class TestThreadPool {
 			randomSleepTimes.add(time);
 		}
 		
-		int exOccurredCount = 0;
 		long startTime = System.currentTimeMillis();
-		for(int r=0; r<executeCount; r++) {
-			try {
-				BlockThreadPoolHolder.execute(new TestHanlder(randomSleepTimes.get(r), BlockThreadPoolHolder.getExecutor(), canInterrupt));
-			}catch (RejectedExecutionException e) {
-				exOccurredCount ++;
-				LOG.error(e.getMessage(), e);
-			}
+		for(int t=0;t<threads;t++){
+			Thread thread = new Thread(new Runnable() {
+				
+				@Override
+				public void run() {
+					for(int r=0; r<executeCount; r++) {
+						try {
+							BlockThreadPoolHolder.execute(new TestHanlder(randomSleepTimes.get(r), BlockThreadPoolHolder.getExecutor(), canInterrupt));
+						}catch (Exception e) {
+							LOG.error(e.getMessage(), e);
+						}
+					}
+				}
+			});
+			thread.setName("test-thread-"+t);
+			thread.start();
+			
 		}
 		long endTime = System.currentTimeMillis();
 		
@@ -59,7 +68,6 @@ public class TestThreadPool {
 			
 			BlockThreadPoolHolder.close();
 			LOG.info("submit task cost time " + (endTime - startTime) + " ms");
-			LOG.info("exception occurred count " + exOccurredCount);
 			LOG.info(
 					String.format("test info -> maximumPoolSize:%d executeCount:%d oneSleepTime:%d", 
 							maximumPoolSize, executeCount, oneSleepTime)
