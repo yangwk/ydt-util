@@ -1,8 +1,13 @@
-package com.github.yangwk.ydtutil.collection.reverse;
+package com.github.yangwk.ydtutil.test.collection.reverse;
+
+import org.junit.Test;
+
+import com.github.yangwk.ydtutil.collection.reverse.RowColReverse;
+import com.github.yangwk.ydtutil.collection.reverse.TwoDArrayRowColReverse;
 
 public class RowColReverseTest {
 	
-	static void print(Object[][] sources){
+	public void print(Object[][] sources){
 		for(int r=0; r<sources.length; r++){
 			for(int c=0; c<sources[r].length; c++){
 				Object col = sources[r][c];
@@ -18,7 +23,7 @@ public class RowColReverseTest {
 		}
 	}
 	
-	static Object[][] getSourcesArray(){
+	public Object[][] getSourcesArray(){
 		//9,9
 		//10,10
 		//1,1
@@ -57,7 +62,8 @@ public class RowColReverseTest {
 		return sources;
 	}
 
-	static void test() {
+	@Test
+	public void test() {
 		
 		Object[][] sources = getSourcesArray();
 		
@@ -85,8 +91,8 @@ public class RowColReverseTest {
 		
 	}
 	
-	
-	static void testTwoDArrayRowColReverse(){
+	@Test
+	public void testTwoDArrayRowColReverse(){
 		Object[][] sources = getSourcesArray();
 		
 		print(sources);
@@ -102,12 +108,6 @@ public class RowColReverseTest {
 		
 		print(sources);
 		
-	}
-	
-	
-	public static void main(String[] args) {
-//		test();
-		testTwoDArrayRowColReverse();
 	}
 
 }

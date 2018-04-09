@@ -11,10 +11,15 @@ import java.util.Map;
  */
 public class ListMapRowColReverse<K,V> extends AbstractRowColReverse<List<Map<K,V>>, List<Map<K,V>>, Map<K,V> >{
 
-	private List<K> srcColsKeys;	//原资源的keys，和原来的列数等长
+	private List<K> srcColsKeys;
 	
-	private List<K> newColsKeys;	//新资源的keys，和原资源的行数等长
+	private List<K> newColsKeys;
 	
+	/**
+	 * 
+	 * @param srcColsKeys 原资源的keys，和原来的列数等长
+	 * @param newColsKeys 新资源的keys，和原资源的行数等长
+	 */
 	public ListMapRowColReverse(List<K> srcColsKeys, List<K> newColsKeys){
 		this.srcColsKeys = srcColsKeys;
 		this.newColsKeys = newColsKeys;

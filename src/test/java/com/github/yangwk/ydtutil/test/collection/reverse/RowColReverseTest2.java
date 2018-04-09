@@ -1,4 +1,4 @@
-package com.github.yangwk.ydtutil.collection.reverse;
+package com.github.yangwk.ydtutil.test.collection.reverse;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -6,15 +6,19 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.junit.Test;
+
+import com.github.yangwk.ydtutil.collection.reverse.ListMapRowColReverse;
+
 public class RowColReverseTest2 {
 	
-	static void printListMap(List<Map<String,Object>> sources){
+	public void printListMap(List<Map<String,Object>> sources){
 		for(Map<String,Object> map : sources){
 			System.out.println(map);
 		}
 	}
 
-	static List<Map<String,Object>> getSourcesMap(){
+	public List<Map<String,Object>> getSourcesMap(){
 		String[] col4Keys = {"id", "name", "value", "text"};
 		List<Map<String,Object>> sourcesMap = new ArrayList<Map<String,Object>>();
 		for(int r=0; r<5; r++){
@@ -30,7 +34,8 @@ public class RowColReverseTest2 {
 		return sourcesMap;
 	}
 
-	static void testListMapRowColReverse(){
+	@Test
+	public void testListMapRowColReverse(){
 		List<Map<String,Object>> sources = getSourcesMap();
 		
 		printListMap(sources);
@@ -49,10 +54,6 @@ public class RowColReverseTest2 {
 		
 		printListMap(sources);
 		
-	}
-
-	public static void main(String[] args) {
-		testListMapRowColReverse();
 	}
 
 }
