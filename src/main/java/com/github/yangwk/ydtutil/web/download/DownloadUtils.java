@@ -41,8 +41,7 @@ public class DownloadUtils {
 			File file = new File(absolutePath);
 			response.setCharacterEncoding(CHARSET);
 			response.setContentLengthLong(file.length());
-			response.setContentType( (contentType == null ? CONTENTTYPE_OCTET_STREAM : contentType)
-					+"; charset="+CHARSET);
+			response.setContentType( contentType == null ? CONTENTTYPE_OCTET_STREAM : contentType );
 			String name = file.getName();
 			if(fileName != null){
 				name = fileName;

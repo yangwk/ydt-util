@@ -86,7 +86,6 @@ public class TreeTest {
 
 			@Override
 			public City queryByParentId(City t) {
-				// TODO Auto-generated method stub
 				return null;
 			}
 		});
@@ -129,7 +128,6 @@ public class TreeTest {
 
 			@Override
 			public City queryByParentId(City t) {
-				// TODO Auto-generated method stub
 				return null;
 			}
 		});

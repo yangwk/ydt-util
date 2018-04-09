@@ -25,7 +25,6 @@ public class Upload {
 	
 	private Chunk chunk;
 	private File file;	//保存的文件
-	private File parentFile;	//保存文件的父节点，不应该为null
 	private boolean isStarted = false;	//标记是否已开始
 	
 	/**
@@ -36,9 +35,8 @@ public class Upload {
 	public Upload(Chunk chunk,String absolutePath){
 		this.chunk = chunk;
 		this.file = new File(absolutePath);
-		this.parentFile = this.file.getParentFile();
-		if(this.parentFile != null){
-			this.parentFile.mkdirs();	//如果存在将不创建
+		if(this.file.getParentFile() != null && ! this.file.getParentFile().exists()) {
+			this.file.getParentFile().mkdirs();
 		}
 	}
 	
@@ -117,7 +115,7 @@ public class Upload {
 	 */
 	private File getTempFile() throws IOException{
 		//临时文件与保存文件同父路径
-		File tempFile = new File( parentFile.getAbsolutePath() + File.separator + tempFileName() );
+		File tempFile = new File( file.getParentFile().getAbsolutePath() + File.separator + tempFileName() );
 		tempFile.createNewFile();	//如果存在，不会创建文件
 		return tempFile;
 	}
