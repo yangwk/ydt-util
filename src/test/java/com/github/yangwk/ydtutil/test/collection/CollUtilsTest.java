@@ -13,6 +13,7 @@ import java.util.Map.Entry;
 import org.junit.Test;
 
 import com.github.yangwk.ydtutil.collection.CollUtils;
+import com.github.yangwk.ydtutil.collection.Eq;
 import com.github.yangwk.ydtutil.collection.SortHelper;
 
 public class CollUtilsTest {
@@ -178,4 +179,22 @@ public class CollUtilsTest {
 	}
 
 
+	
+	@Test
+	public void testFindRemove() {
+		List<Integer> m = new ArrayList<Integer>( Arrays.asList(new Integer[] {0,489,8,9,15,24,95, 488}) );
+		List<Integer> n = new ArrayList<Integer>( Arrays.asList(new Integer[] {0,1,8,9,15,24,95}) );
+		
+		int removed = CollUtils.findRemove(m, n, new Eq<Integer, Integer>() {
+			@Override
+			public boolean equals(Integer m, Integer n) {
+				return m.equals(n);
+			}
+			
+		});
+		
+		System.out.println(removed);
+		System.out.println(m);
+	}
+	
 }

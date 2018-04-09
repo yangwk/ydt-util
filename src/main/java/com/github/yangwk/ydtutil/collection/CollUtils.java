@@ -2,6 +2,7 @@ package com.github.yangwk.ydtutil.collection;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Iterator;
 
 import org.apache.commons.collections.CollectionUtils;
 
@@ -48,4 +49,44 @@ public class CollUtils {
 	}
 	
 
+	/**
+	 * 查找并删除。将不在collFind集合内的collRemove元素删除掉
+	 * @author yangwk
+	 * @param collRemove 要删除的集合
+	 * @param collFind 匹配的集合
+	 * @param eq 等值比较
+	 * @return 删除的元素个数
+	 */
+	public static <M,N> int findRemove(Collection<M> collRemove, Collection<N> collFind, Eq<M, N> eq) {
+		if(collRemove == null || collFind == null)
+			return 0;
+		int removed = 0;
+		
+		Iterator<M> iterM =  collRemove.iterator();
+		while(iterM.hasNext()) {
+			M m = iterM.next();
+			
+			boolean found = false;
+			Iterator<N> iterN =  collFind.iterator();
+			while(iterN.hasNext()) {
+				N n = iterN.next();
+				
+				if(eq.equals(m, n)) {
+					found = true;
+					break;
+				}
+				
+			}
+			
+			//找不到，就删除
+			if(! found) {
+				iterM.remove();
+				removed ++;
+			}
+		}
+		
+		return removed;
+	}
+	
+	
 }
