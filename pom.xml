@@ -24,6 +24,7 @@
 		<commons.dbutils.version>1.6</commons.dbutils.version>
 		<druid.version>1.0.27</druid.version>
 		<mysql.connector.java.version>5.1.38</mysql.connector.java.version>
+		<antlr4.version>4.7</antlr4.version>
 
 		<commons.lang3.version>3.5</commons.lang3.version>
 		<commons.io.version>2.5</commons.io.version>
@@ -152,6 +153,15 @@
 			<groupId>commons-collections</groupId>
 			<artifactId>commons-collections</artifactId>
 			<version>${commons.collections.version}</version>
+		</dependency>
+		
+		
+		<dependency>
+		    <groupId>org.antlr</groupId>
+		    <artifactId>antlr4</artifactId>
+		    <version>${antlr4.version}</version>
+		    <scope>provided</scope>
+		    <optional>true</optional>
 		</dependency>
 
 	</dependencies>
